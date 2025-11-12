@@ -18,8 +18,32 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean returnCat(int id) {
-		// TODO: Fill in
-		return false;
+		
+		
+			Cat cat = cats.get(id-1);
+
+			if (cat.getRented()) {
+				cat.returnCat();
+				
+				StringBuilder sb = new StringBuilder();
+				sb.append("Welcome back, ");
+				sb.append(cat.getName());
+				sb.append("!");
+				System.out.println(sb.toString());
+
+				return true;
+			}
+
+			else {
+				StringBuilder sb = new StringBuilder();
+				sb.append(cat.getName());
+				sb.append(" is already here!");
+				System.out.println(sb.toString());
+
+				return false;
+			}
+
+		
 	}
 
 	/**
@@ -33,8 +57,28 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean rentCat(int id) {
-		// TODO: Fill in
-		return false;
+		
+		Cat cat = cats.get(id-1);
+
+		if (!cat.getRented()) {
+			cat.rentCat();
+			StringBuilder sb = new StringBuilder();
+			sb.append(cat.getName());
+			sb.append(" has been rented.");
+			System.out.println(sb.toString());
+
+			return true;
+		}
+
+		else {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Sorry, ");
+			sb.append(cat.getName());
+			sb.append(" is not here!");
+			System.out.println(sb.toString());
+
+			return false;
+		}
 	}
 
 	/**
@@ -47,8 +91,16 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean renameCat(int id, String name) {
-		// TODO: Fill in
-		return false;
+		try {
+			Cat cat = cats.get(id-1);
+			cat.renameCat(name);
+			return true;
+		}
+
+		catch(IndexOutOfBoundsException e) {
+			System.out.println("Invalid cat ID.");
+			return false;
+		}
 	}
 
 	/**
@@ -62,8 +114,17 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public String listCats() {
-		// TODO: Fill in
-		return "WRITE CODE FOR THIS";
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < cats.size(); i++) {
+			Cat cat = cats.get(i);
+			if (!cat.getRented()) {
+				sb.append(cat.toString());
+				sb.append(System.lineSeparator());
+			}
+		}	
+
+		return sb.toString();
 	}
 
 	/**
